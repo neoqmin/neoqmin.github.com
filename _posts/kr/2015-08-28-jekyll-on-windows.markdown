@@ -13,7 +13,7 @@ categories: jekyll Windows
 우선, github.io용 블로그를 작성하기 위해서는 Jekyll을 설치해야 한다. jekyll을 설치하기 위해서는 Ruby도 설치해야한다.
 많이 복잡하고, 귀찮은 작업이지만, 아래의 사이트를 참조하여 그 설치는 어렵지 않게 할 수 있었다.
 
-[Run Jekyll on Windows][run_jekyll_on_windows]
+[Run Jekyll on Windows](http://jekyll-windows.juthilo.com)
 
 간단하게 정리하자면, 그 순서는 아래와 같다.
 
@@ -31,5 +31,3 @@ categories: jekyll Windows
  변경해야 한다. 그런다음 Jekyll의 환경설정 파일 _config.yml에 아래의 코드를 추가한다.
 
  encoding: "utf-8"
-
-run_jekyll_on_windows: http://jekyll-windows.juthilo.com

@@ -234,3 +234,44 @@
         }
     }
 }
+.home {
+    h1 {
+        font-size: 2.5em;
+        color: #2c3e50;
+    }
+}
+.ncontent {
+    font-family: 'Arial', sans-serif;
+    background-color: #ffffff;
+    background-color: #f4f7f6;
+    color: #333;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    line-height: 1.8;
+
+    h2 {
+        font-size: 1.8em;
+        color: #3498db;
+        margin-bottom: 20px;
+    }
+
+    p {
+        font-size: 1.1em;
+        color: #7f8c8d;
+    }
+}
+
+@media (max-width: 768px) {
+    .ncontent {
+        padding: 20px;
+
+        h2 {
+            font-size: 1.5em;
+        }
+
+        p {
+            font-size: 1em;
+        }
+    }
+}

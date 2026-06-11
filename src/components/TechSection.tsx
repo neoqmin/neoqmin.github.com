@@ -12,7 +12,7 @@ export default function TechSection() {
           <p className="text-sm md:text-base text-white/65 leading-[1.75] max-w-[460px]">
             Windows File System Mini-Filter를 포함한 커널 프로그래밍과 API 후킹
             전문 기술을 바탕으로, 일반 앱으로는 불가능한 시스템 수준의 기능을
-            구현합니다. PdfManager의 프린터 자동 전환이 대표적인 사례입니다.
+            구현합니다. PyAutoFlow의 API 후킹 기반 안전 실행이 대표적인 사례입니다.
           </p>
           <div className="flex flex-wrap gap-2.5">
             {pills.map((pill) => (

@@ -8,7 +8,7 @@ export default function Nav() {
   return (
     <nav className="absolute top-0 left-0 right-0 z-10">
       <div className="flex items-center justify-between px-5 md:px-20 h-16">
-        <span className="text-white text-xl font-bold tracking-tight">EdgeBit</span>
+        <span className="text-white text-xl font-bold tracking-tight">EdgeBit<span className="text-white/50 font-normal">.co.kr</span></span>
 
         {/* 데스크톱 메뉴 */}
         <div className="hidden md:flex items-center gap-8">
@@ -17,10 +17,10 @@ export default function Nav() {
           <a href="#about" className="text-white/80 text-sm hover:text-white transition-colors">회사 소개</a>
         </div>
         <a
-          href="mailto:contact@edgebit.co.kr"
+          href="mailto:help@edgebit.co.kr"
           className="hidden md:block bg-[var(--accent)] text-white text-sm font-semibold px-4 py-2 rounded-[var(--rounded-sm)] hover:opacity-90 transition-opacity"
         >
-          무료 다운로드
+          문의하기
         </a>
 
         {/* 모바일 햄버거 */}
@@ -52,10 +52,10 @@ export default function Nav() {
             );
           })}
           <a
-            href="mailto:contact@edgebit.co.kr"
+            href="mailto:help@edgebit.co.kr"
             className="m-5 bg-[var(--accent)] text-white text-sm font-semibold px-4 py-3 rounded-[var(--rounded-sm)] text-center"
           >
-            무료 다운로드
+            문의하기
           </a>
         </div>
       )}

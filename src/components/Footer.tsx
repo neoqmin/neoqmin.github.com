@@ -1,7 +1,5 @@
 const productLinks = [
-  { label: "PdfManager", href: "/products/pdfmanager" },
   { label: "PyAutoFlow", href: "/products/pyautoflow" },
-  { label: "PyAutoFlowCommunity", href: "/products/pyautoflow-community" },
 ];
 
 const companyLinks = [
@@ -16,7 +14,7 @@ export default function Footer() {
         {/* 상단 */}
         <div className="flex flex-col md:flex-row justify-between gap-10 md:gap-0 items-start">
           <div className="flex flex-col gap-3 max-w-[280px]">
-            <span className="text-white text-xl font-bold">EdgeBit</span>
+            <span className="text-white text-xl font-bold">EdgeBit<span className="text-white/40 font-normal">.co.kr</span></span>
             <p className="text-sm text-white/50 leading-[1.7]">
               Windows 생산성 도구 전문<br />edgebit.co.kr
             </p>
@@ -40,8 +38,8 @@ export default function Footer() {
             </div>
             <div className="flex flex-col gap-4">
               <span className="text-xs font-semibold text-white/40 tracking-[1px] uppercase">문의</span>
-              <a href="mailto:contact@edgebit.co.kr" className="text-sm text-[var(--accent)] hover:underline break-all">
-                contact@edgebit.co.kr
+              <a href="mailto:help@edgebit.co.kr" className="text-sm text-[var(--accent)] hover:underline break-all">
+                help@edgebit.co.kr
               </a>
             </div>
           </div>

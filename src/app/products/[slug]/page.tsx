@@ -29,8 +29,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   if (!product) notFound();
 
   return (
-    <>
-      <main className="min-h-screen bg-[var(--surface-secondary)]">
+    <main className="min-h-screen bg-[var(--surface-secondary)]">
         {/* 히어로 */}
         <div className={`px-5 md:px-20 py-16 ${product.dark ? "bg-[var(--surface-inverse)]" : "bg-[var(--surface-primary)]"}`}>
           <div className="max-w-[1280px] mx-auto flex flex-col gap-6">
@@ -140,8 +139,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             </div>
           </div>
         </div>
-      </main>
-      <Footer />
-    </>
+        <Footer />
+    </main>
   );
 }

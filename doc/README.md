@@ -22,8 +22,17 @@ npm run lint
 
 | 용도 | 레포지토리 | 서비스 URL |
 |------|-----------|-----------|
-| 회사 공식 | `k-edgebit/k-edgebit.github.io` (public) | https://k-edgebit.github.io/ |
-| 개인 테스트 | `***/***.github.com` (public) | https://***.github.io/ |
+| 커스텀 도메인 운영 | `***/***.github.com` (public) | https://edgebit.co.kr/ , https://***.github.io/ |
+| 조직 GitHub Pages | `k-edgebit/k-edgebit.github.io` (public) | https://k-edgebit.github.io/ |
+| 소스(private) | `k-edgebit/homepage` (private, Pages 미지원) | — |
+
+> `edgebit.co.kr` 커스텀 도메인은 도메인 소유권 검증 문제로 `***` 계정(origin) 레포에
+> 연결되어 있습니다.
+>
+> ⚠️ **`public/CNAME` 은 origin 레포에만 두어야 합니다.** 이 파일을
+> `k-edgebit/k-edgebit.github.io` 로 push 하면 그 레포의 Actions 배포가
+> "미검증 도메인" 으로 실패할 수 있습니다. k-edgebit 레포들은 CNAME 없이 유지하고,
+> 커스텀 도메인 사이트(edgebit.co.kr)는 **origin 으로만** push 해 배포합니다.
 
 > GitHub Pages를 **루트 URL**(`<account>.github.io`)로 서비스하려면
 > 레포지토리 이름이 반드시 `<account>.github.io` 여야 합니다.
@@ -164,19 +173,48 @@ Pages가 Jekyll(branch) 모드(`build_type: legacy`)일 때 발생.
 
 ---
 
-## 커스텀 도메인 (edgebit.co.kr) 연결 — 선택
+## 커스텀 도메인 (edgebit.co.kr) — 현재 운영 구성
 
-현재는 `<account>.github.io` 로 서비스됩니다 (`cname: null`).
-`edgebit.co.kr` 연결 시:
+`edgebit.co.kr`은 **origin 레포(`***/***.github.com`)** 의 Pages에 연결되어 있습니다.
+(이 도메인은 `***` 계정에서 이미 소유권 검증된 상태라, 같은 도메인을 다른 조직
+레포로 옮기려면 그 조직에서 별도 도메인 검증 TXT가 필요합니다.)
 
-1. `public/CNAME` 파일에 `edgebit.co.kr` 한 줄 작성 (정적 export에 포함됨)
-2. DNS(예: Cloudflare)에서 apex/`www`를 GitHub Pages로 지정
-   | Type | Name | Content |
-   |------|------|---------|
-   | A | `@` | 185.199.108.153 / .109.153 / .110.153 / .111.153 |
-   | CNAME | `www` | `<account>.github.io` |
-3. 레포 Settings → Pages → Custom domain에 `edgebit.co.kr` 입력, HTTPS enforce 체크
-4. 이메일(`help@edgebit.co.kr`)을 쓰려면 별도로 MX/TXT(Google Workspace 등) 레코드 추가
+### DNS (Cloudflare) — apex 는 CNAME flattening
+| Type | Name | Content | Proxy |
+|------|------|---------|-------|
+| CNAME | `edgebit.co.kr` (`@`) | `***.github.io` | **DNS only (회색 구름)** |
+| CNAME | `www` | `edgebit.co.kr` | DNS only |
+
+> ⚠️ 반드시 **DNS only(회색)** 여야 함. Cloudflare 프록시(주황)를 켜면
+> GitHub Pages의 Let's Encrypt 인증서 자동 발급이 막혀 SSL 오류가 납니다.
+> apex(`@`)에 A 레코드(185.199.108~111.153) 대신 CNAME flattening 을 써도 동작합니다.
+
+### GitHub 쪽 설정 (이미 적용됨)
+1. `public/CNAME` 파일에 `edgebit.co.kr` 한 줄 → 정적 export 시 `out/CNAME` 로 포함.
+   **GitHub Actions 배포 방식에서는 이 파일이 있어야** 해당 배포가 도메인을 점유함
+   (settings 의 custom domain 설정만으로는 라우팅이 안 되어 404 발생).
+2. 레포 custom domain 설정 (gh CLI):
+   ```bash
+   gh api --method PUT repos/***/***.github.com/pages -f cname=edgebit.co.kr -F build_type=workflow
+   ```
+3. push → Actions 재배포 후 확인:
+   ```bash
+   curl -sL -o /dev/null -w "%{http_code}\n" https://edgebit.co.kr/
+   ```
+
+### 트러블슈팅 — `edgebit.co.kr` 이 404 / 옛날 페이지
+- `curl https://edgebit.co.kr/` 가 GitHub **404("Site not found")** → 배포 아티팩트에
+  `CNAME` 파일이 없거나 custom domain 미설정. 위 1~3 적용 후 재배포.
+- 브라우저에선 옛 페이지가 보이는데 `curl` 은 정상(200) → **브라우저/CDN 캐시**.
+  하드 리프레시(Ctrl+Shift+R) 또는 시크릿 창에서 확인.
+- 배포 실패 로그 `due to in progress deployment ... Please cancel <sha>` →
+  직전 Pages 배포가 일시적으로 걸린 상태. 보통 수 분 내 자동 해소되며 재배포하면 됨.
+- `www` 가 `SSL certificate problem`(curl exit 60) → apex/`www` 인증서가 아직
+  발급 중. GitHub 이 양쪽 인증서를 발급할 때까지(보통 수 분~1시간) 대기.
+
+### 이메일
+`help@edgebit.co.kr` 메일을 쓰려면 위 Pages용 레코드와 별개로
+MX/TXT(Google Workspace 등) 레코드를 추가해야 합니다.
 
 ---
 
